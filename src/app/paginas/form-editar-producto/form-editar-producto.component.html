@@ -1,0 +1,57 @@
+    <div class="form-modal">
+      <h2><b>Editar Reloj</b></h2>
+  
+      <!-- Campo para el nombre del reloj -->
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="reloj.nombre" name="nombre">
+      </mat-form-field>
+  
+      <!-- Campo para el tipo de caja -->
+      <mat-form-field>
+        <mat-label>Tipo de Caja</mat-label>
+        <input matInput [(ngModel)]="reloj.caja" name="caja">
+      </mat-form-field>
+  
+      <!-- Campo para el precio del reloj -->
+      <mat-form-field>
+        <mat-label>Precio</mat-label>
+        <input matInput type="number" [(ngModel)]="reloj.precio" name="precio">
+      </mat-form-field>
+  
+      <!-- Campo para el stock disponible -->
+      <mat-form-field>
+        <mat-label>Stock</mat-label>
+        <input matInput type="number" [(ngModel)]="reloj.stock" name="stock">
+      </mat-form-field>
+  
+      <!-- Campo para el tipo de movimiento -->
+      <mat-form-field>
+        <mat-label>Movimiento</mat-label>
+        <input matInput [(ngModel)]="reloj.movimiento" name="movimiento">
+      </mat-form-field>
+  
+      <!-- Campo para la descripción -->
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea matInput [(ngModel)]="reloj.descripcion" name="descripcion"></textarea>
+      </mat-form-field>
+  
+      <!-- Campo para la URL de la imagen -->
+      <mat-form-field>
+        <mat-label>URL de la Imagen</mat-label>
+        <input matInput [(ngModel)]="reloj.imagen_url" name="imagen_url">
+      </mat-form-field>
+  
+      <!-- Campo para el material de la pulsera -->
+      <mat-form-field>
+        <mat-label>Material de la Pulsera</mat-label>
+        <input matInput [(ngModel)]="reloj.material_pulsera" name="material_pulsera">
+      </mat-form-field>
+  
+      <!-- Botones de acción -->
+      <div class="dialog-buttons">
+        <button mat-button (click)="cancelar()">Cancelar</button>
+        <button mat-button color="primary" (click)="guardar()">Guardar</button>
+      </div>
+    </div>  

@@ -1,0 +1,57 @@
+      <h2><b>Crear Producto</b></h2>
+      
+      <!-- Nombre del producto -->
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="producto.nombre" name="nombre">
+      </mat-form-field>
+      
+      <!-- Caja del producto -->
+      <mat-form-field>
+        <mat-label>Caja</mat-label>
+        <input matInput [(ngModel)]="producto.caja" name="caja">
+      </mat-form-field>
+      
+      <!-- Precio del producto -->
+      <mat-form-field>
+        <mat-label>Precio</mat-label>
+        <input matInput [(ngModel)]="producto.precio" name="precio" type="number">
+      </mat-form-field>
+      
+      <!-- Stock del producto -->
+      <mat-form-field>
+        <mat-label>Stock</mat-label>
+        <input matInput [(ngModel)]="producto.stock" name="stock" type="number">
+      </mat-form-field>
+      
+      <!-- Movimiento del producto -->
+      <mat-form-field>
+        <mat-label>Movimiento</mat-label>
+        <input matInput [(ngModel)]="producto.movimiento" name="movimiento">
+      </mat-form-field>
+      
+      <!-- Descripción del producto -->
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea matInput [(ngModel)]="producto.descripcion" name="descripcion"></textarea>
+      </mat-form-field>
+      
+      <!-- URL de la imagen -->
+      <mat-form-field>
+        <mat-label>URL de Imagen</mat-label>
+        <input matInput [(ngModel)]="producto.imagen_url" name="imagen_url">
+      </mat-form-field>
+      
+      <!-- Material de la pulsera -->
+      <mat-form-field>
+        <mat-label>Material de la Pulsera</mat-label>
+        <input matInput [(ngModel)]="producto.material_pulsera" name="material_pulsera">
+      </mat-form-field>
+      
+      <!-- Botones de acción -->
+      <div class="dialog-buttons">
+        <button mat-button (click)="cancelar()">Cancelar</button>
+        <button mat-button color="primary" (click)="guardar()">Guardar</button>
+      </div>
+
+  

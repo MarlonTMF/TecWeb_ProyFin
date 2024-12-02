@@ -1,0 +1,76 @@
+    <!-- Sección de búsqueda -->
+    <div class="search-section">
+      <label>Buscar por Nombre: </label>
+      <input [(ngModel)]="filtroNombre" name="filtroNombre" placeholder="Nombre" />
+      <label>Buscar por Caja:</label>
+      <input [(ngModel)]="filtroCaja" name="filtroCaja" placeholder="Caja" />
+    </div>
+  
+    <div class="container">
+      <!-- Botón para agregar un producto -->
+      <button class="add-button" (click)="abrirFormulario()">
+        <span>+</span> <b>Agregar Producto</b>
+      </button>
+  
+      <!-- Modal para agregar/editar producto -->
+      <div class="modal" *ngIf="mostrarFormulario">
+        <div class="modal-content">
+          <span class="close" (click)="cerrarFormulario()">&times;</span>
+          <h2><b>{{ editando ? 'Editar Producto' : 'Agregar Producto' }}</b></h2>
+  
+          <form (ngSubmit)="guardarProducto()">
+            <label>Nombre:</label>
+            <input [(ngModel)]="producto.nombre" name="nombre" required />
+  
+            <label>Caja:</label>
+            <input [(ngModel)]="producto.caja" name="caja" required />
+  
+            <label>Precio:</label>
+            <input [(ngModel)]="producto.precio" name="precio" type="number" required />
+  
+            <label>Stock:</label>
+            <input [(ngModel)]="producto.stock" name="stock" type="number" required />
+  
+            <label>Movimiento:</label>
+            <input [(ngModel)]="producto.movimiento" name="movimiento" />
+  
+            <label>Descripción:</label>
+            <textarea [(ngModel)]="producto.descripcion" name="descripcion"></textarea>
+  
+            <label>URL de Imagen:</label>
+            <input [(ngModel)]="producto.imagen_url" name="imagen_url" />
+  
+            <label>Material de la Pulsera:</label>
+            <input [(ngModel)]="producto.material_pulsera" name="material_pulsera" />
+  
+            <button type="submit">{{ editando ? 'Guardar Cambios' : 'Agregar' }}</button>
+          </form>
+        </div>
+      </div>
+  
+      <!-- Tabla para mostrar productos -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Caja</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productosFiltrados">
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.caja }}</td>
+            <td>{{ producto.precio | currency }}</td>
+            <td>{{ producto.stock }}</td>
+            <td>
+              <button (click)="editarProducto(producto.id_producto)">Editar</button>
+              <button (click)="eliminarProducto(producto.id_producto)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
