@@ -8,10 +8,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductModel } from  '../../modelos/reloj.model'
-import { MensajesService } from '../mensajes/mensajes.component';
 import { AdminCRUDRelojesService } from '../../servicios/admin-crud-relojes.service';
-import { FormCrearProductoComponent } from '../form-crear-producto/form-crear-producto.component';
-import { FormEditarProductoComponent } from '../form-editar-producto/form-editar-producto.component';
+import { HttpClientModule } from '@angular/common/http';  // Asegúrate de importar HttpClientModule
 
 @Component({
   selector: 'app-admin-relojes',
@@ -23,6 +21,7 @@ import { FormEditarProductoComponent } from '../form-editar-producto/form-editar
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    HttpClientModule
   ],
   templateUrl: './admin-relojes.component.html',
   styleUrl: './admin-relojes.component.scss'
