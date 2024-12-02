@@ -1,1 +1,17 @@
-<p>formulario-cliente works!</p>
+<div *ngIf="showForm" class="formulario-container">
+    <h3>Formulario de Suscripción</h3>
+    <form (submit)="onSubmit()">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" [(ngModel)]="nombre" name="nombre" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="email" name="email" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </div>
+  
+  <button class="btn btn-primary" (click)="toggleForm()">Suscribirme</button>
+  
