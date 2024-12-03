@@ -9,6 +9,6 @@ export interface ProductModel {
     descripcion: string;
     imagen_url:string;
     material_pulsera:string;
-    id_producto: number;
+    id: string;
     
 }

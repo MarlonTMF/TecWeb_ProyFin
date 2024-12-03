@@ -26,13 +26,13 @@ export class AdminCRUDRelojesService {
       );
     }
 
-    obtenerRelojPorId(id: number): Observable<ProductModel> {
+    obtenerRelojPorId(id: string): Observable<ProductModel> {
       return this.http.get<ProductModel>(`${this.apiURL}/${id}`).pipe(
         catchError(this.handleError)
       );
     }
 
-    actualizarReloj(id: number, reloj: Partial<ProductModel>): Observable<ProductModel> {
+    actualizarReloj(id: string, reloj: Partial<ProductModel>): Observable<ProductModel> {
       return this.http.put<ProductModel>(`${this.apiURL}/${id}`, reloj).pipe(
         catchError(this.handleError)
       );

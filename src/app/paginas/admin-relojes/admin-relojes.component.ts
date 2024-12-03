@@ -70,17 +70,18 @@ export class AdminRelojesComponent implements OnInit {
 
     if (this.editando) {
       // Actualizar producto
-      this.relojesService
-        .actualizarReloj(this.producto.id_producto, this.producto)
-        .subscribe(
-          () => {
-            this.obtenerProductos();
-            this.cerrarFormulario();
-            console.log('Producto actualizado correctamente');
-          },
-          (error) =>
-            console.error('Error al actualizar el producto:', error)
-        );
+      if (!this.producto.id) {
+        console.error('El ID del producto no es válido');
+        return;
+      }
+      this.relojesService.actualizarReloj(this.producto.id, this.producto).subscribe(
+        () => {
+          this.obtenerProductos();
+          this.cerrarFormulario();
+          console.log('Producto actualizado correctamente');
+        },
+        (error) => console.error('Error al actualizar el producto:', error)
+      );
     } else {
       // Agregar nuevo producto
       this.relojesService.agregarReloj(this.producto).subscribe(
@@ -89,13 +90,16 @@ export class AdminRelojesComponent implements OnInit {
           this.cerrarFormulario();
           console.log('Producto agregado correctamente');
         },
-        (error) =>
-          console.error('Error al agregar el producto:', error)
+        (error) => console.error('Error al agregar el producto:', error)
       );
     }
   }
 
-  editarProducto(id: number): void {
+  editarProducto(id: string): void {
+    if (!id) {
+      console.error('El ID del producto no es válido',id);
+      return;
+    }
     this.relojesService.obtenerRelojPorId(id).subscribe(
       (data) => {
         this.producto = data;
@@ -106,7 +110,7 @@ export class AdminRelojesComponent implements OnInit {
     );
   }
 
-  eliminarProducto(id: number): void {
+  eliminarProducto(id: string): void {
     if (confirm('¿Estás seguro de eliminar este producto?')) {
       this.relojesService.actualizarReloj(id, { stock: 0 }).subscribe(
         () => {
@@ -133,7 +137,7 @@ export class AdminRelojesComponent implements OnInit {
 
   private nuevoProducto(): ProductModel {
     return {
-      id_producto: 0,
+      id: '',
       nombre: '',
       caja: '',
       precio: 0,
