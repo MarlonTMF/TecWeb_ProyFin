@@ -52,6 +52,12 @@ export class AdminCRUDRelojesService {
       );
     }
   
+    eliminarReloj(id: string): Observable<void> {
+      return this.http.delete<void>(`${this.apiURL}/${id}`).pipe(
+        catchError(this.handleError)
+      );
+    }
+    
 
     private handleError(error: HttpErrorResponse) {
       console.error('Ocurrió un error:', error);
