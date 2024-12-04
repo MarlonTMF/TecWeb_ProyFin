@@ -11,19 +11,25 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { AdminCRUDRelojesService } from './servicios/admin-crud-relojes.service';
+import { VerProductosComponent } from './paginas/ver-productos/ver-productos.component';
 
 
 @NgModule({
   declarations: [
+    VerProductosComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     CommonModule,
     FormsModule,
-    
+    HttpClientModule
 
   ],
+
+  providers: [],
+  bootstrap: [VerProductosComponent]
 
 
 })
