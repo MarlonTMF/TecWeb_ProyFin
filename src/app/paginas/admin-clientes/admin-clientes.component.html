@@ -1,0 +1,70 @@
+<div class="contenedor-principal">
+    <h1>Gestión de Clientes</h1>
+  
+    <!-- Filtros -->
+    <div class="filtros">
+      <input
+        type="text"
+        placeholder="Buscar por nombre"
+        [(ngModel)]="filtroNombre"
+      />
+      <input
+        type="text"
+        placeholder="Buscar por correo"
+        [(ngModel)]="filtroCorreo"
+      />
+    </div>
+  
+    <!-- Botón para agregar cliente -->
+    <button class="add-button" (click)="abrirFormulario()">
+      <span>+</span> Agregar Cliente
+    </button>
+  
+    <!-- Modal para agregar/editar cliente -->
+    <div class="modal" *ngIf="mostrarFormulario">
+      <div class="modal-content">
+        <span class="close" (click)="cerrarFormulario()">&times;</span>
+        <h2>{{ editando ? 'Editar Cliente' : 'Agregar Cliente' }}</h2>
+  
+        <form (ngSubmit)="guardarCliente()">
+          <label>Nombre:</label>
+          <input [(ngModel)]="cliente.nombre" name="nombre" required />
+  
+          <label>Correo:</label>
+          <input [(ngModel)]="cliente.correo" name="correo" required />
+  
+          <label>Teléfono:</label>
+          <input [(ngModel)]="cliente.telefono" name="telefono" required />
+  
+          <label>Preferencias:</label>
+          <textarea [(ngModel)]="cliente.preferencias" name="preferencias"></textarea>
+  
+          <button type="submit">{{ editando ? 'Guardar Cambios' : 'Agregar' }}</button>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Tabla para mostrar clientes -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientesFiltrados">
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.correo }}</td>
+          <td>{{ cliente.telefono }}</td>
+          <td>
+            <button class="editar" (click)="editarCliente(cliente.id)">Editar</button>
+            <button class="eliminar" (click)="eliminarCliente(cliente.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
