@@ -146,6 +146,7 @@ export class AdminRelojesComponent implements OnInit {
       descripcion: '',
       imagen_url: '',
       material_pulsera: '',
+      categoria:''
     };
   }
 }
