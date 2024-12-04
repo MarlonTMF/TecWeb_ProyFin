@@ -112,16 +112,16 @@ export class AdminRelojesComponent implements OnInit {
 
   eliminarProducto(id: string): void {
     if (confirm('¿Estás seguro de eliminar este producto?')) {
-      this.relojesService.actualizarReloj(id, { stock: 0 }).subscribe(
+      this.relojesService.eliminarReloj(id).subscribe(
         () => {
-          this.obtenerProductos();
+          this.obtenerProductos(); // Recargar productos después de eliminar
           console.log('Producto eliminado correctamente');
         },
-        (error) =>
-          console.error('Error al eliminar el producto:', error)
+        (error) => console.error('Error al eliminar el producto:', error)
       );
     }
   }
+  
 
   get productosFiltrados(): ProductModel[] {
     return this.productos.filter(
