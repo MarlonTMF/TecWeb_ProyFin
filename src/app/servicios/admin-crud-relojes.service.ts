@@ -44,6 +44,12 @@ export class AdminCRUDRelojesService {
       );
     }
 
+    obtenerRelojesPorCategoria(categoria: string): Observable<ProductModel[]> {
+      return this.http.get<ProductModel[]>(`${this.apiURL}?categoria=${categoria}`).pipe(
+        catchError(this.handleError)
+      );
+    }
+
     buscarReloj(nombre: string, caja: string): Observable<ProductModel[]> {
       return this.http.get<ProductModel[]>(
         `${this.apiURL}?nombre=${nombre}&caja=${caja}`

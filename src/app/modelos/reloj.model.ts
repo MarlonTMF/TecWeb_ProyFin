@@ -9,6 +9,7 @@ export interface ProductModel {
     descripcion: string;
     imagen_url:string;
     material_pulsera:string;
+    categoria:string;
     id: string;
     
 }
