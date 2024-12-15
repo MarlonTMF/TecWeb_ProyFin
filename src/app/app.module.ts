@@ -23,8 +23,7 @@ import { VerProductosComponent } from './paginas/ver-productos/ver-productos.com
     BrowserModule,
     RouterModule.forRoot(routes),
     CommonModule,
-    FormsModule,
-    HttpClientModule
+    FormsModule
 
   ],
 

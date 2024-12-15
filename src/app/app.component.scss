@@ -1,0 +1,80 @@
+  .navbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 2rem;
+background-color: #0066cc;
+color: white;
+position: relative;
+z-index: 1;
+}
+
+.logo {
+font-size: 1.5rem;
+font-weight: bold;
+}
+
+.navbar nav ul {
+display: flex;
+gap: 1.5rem;
+list-style: none;
+}
+
+.navbar nav ul li {
+position: relative;
+}
+
+.navbar nav ul li a {
+color: white;
+text-decoration: none;
+font-weight: 500;
+}
+
+.navbar nav ul li:hover .dropdown {
+display: block;
+}
+
+.dropdown {
+display: none;
+position: absolute;
+top: 100%;
+left: 0;
+background-color: #0066cc;
+color: white;
+min-width: 200px;
+border-radius: 4px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+padding: 1rem;
+}
+
+.dropdown a {
+color: white;
+text-decoration: none;
+padding: 0.5rem 0;
+display: block;
+font-weight: 500;
+}
+
+.dropdown a:hover {
+background-color: #004c99;
+color: white;
+}
+
+.search-cart {
+display: flex;
+gap: 0.5rem;
+}
+
+.search-cart input {
+padding: 0.5rem;
+border-radius: 4px;
+border: none;
+}
+
+.cart-btn {
+background: none;
+border: none;
+font-size: 1.2rem;
+cursor: pointer;
+color: white;
+}

@@ -7,35 +7,53 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-ver-productos',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './ver-productos.component.html',
-  styleUrl: './ver-productos.component.scss'
+  styleUrl: './ver-productos.component.scss',
 })
 export class VerProductosComponent {
   productos: ProductModel[] = [];
+  productosFiltrados: ProductModel[] = [];
   nombre: string = '';
   caja: string = '';
   precio: string = '';
+  materialPulsera: string = ''; // Nueva variable para el filtro de material
 
   constructor(private relojService: AdminCRUDRelojesService) {}
 
   ngOnInit(): void {
-    this.obtenerTodosLosProductos(); 
+    this.obtenerTodosLosProductos();
   }
 
   obtenerTodosLosProductos(): void {
     this.relojService.obtenerTodosLosRelojes().subscribe(
-      (data) => this.productos = data,
+      (data) => {
+        this.productos = data;
+        this.productosFiltrados = data; // Inicializar con todos los productos
+      },
       (error) => console.error('Error al obtener los productos:', error)
     );
   }
 
   buscarProductos(): void {
-    this.relojService.buscarReloj(this.nombre, this.caja).subscribe(
-      (data) => this.productos = data,
-      (error) => console.error('Error al buscar productos:', error)
-    );
+    this.productosFiltrados = this.productos.filter((producto) => {
+      const coincideNombre = this.nombre
+        ? producto.nombre.toLowerCase().includes(this.nombre.toLowerCase())
+        : true;
+
+      const coincideCaja = this.caja
+        ? producto.caja.toLowerCase().includes(this.caja.toLowerCase())
+        : true;
+
+      const coincidePrecio = this.precio
+        ? producto.precio >= parseFloat(this.precio)
+        : true;
+
+      const coincideMaterialPulsera = this.materialPulsera
+        ? producto.material_pulsera === this.materialPulsera
+        : true;
+
+      return coincideNombre && coincideCaja && coincidePrecio && coincideMaterialPulsera;
+    });
   }
 }
-
-
