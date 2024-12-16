@@ -48,28 +48,40 @@ export class AdminClientesComponent implements OnInit {
   cerrarFormulario(): void {
     this.mostrarFormulario = false;
   }
+  
 
   guardarCliente(): void {
     if (!this.cliente.nombre || !this.cliente.correo || !this.cliente.telefono) {
       console.error('Todos los campos son obligatorios');
       return;
     }
-
+  
+    // Eliminar id si no estamos editando (agregando nuevo cliente)
+    const clienteAEnviar = { ...this.cliente };
+    if (!this.editando) {
+      delete clienteAEnviar.id; // No enviar id cuando es un nuevo cliente
+    }
+  
     if (this.editando) {
-      if (!this.cliente.id) {
-        console.error('El ID del cliente no es válido');
-        return;
+      // Eliminar el campo `id` si se está editando
+      const { id, ...clienteSinId } = clienteAEnviar;
+  
+      // Verificar si `id` es válido (no es undefined) antes de llamar a actualizarCliente
+      if (id !== undefined) {
+        this.clientesService.actualizarCliente(id, clienteSinId).subscribe(
+          () => {
+            this.obtenerClientes();
+            this.cerrarFormulario();
+            console.log('Cliente actualizado correctamente');
+          },
+          (error) => console.error('Error al actualizar el cliente:', error)
+        );
+      } else {
+        console.error('El id del cliente no está definido');
       }
-      this.clientesService.actualizarCliente(this.cliente.id, this.cliente).subscribe(
-        () => {
-          this.obtenerClientes();
-          this.cerrarFormulario();
-          console.log('Cliente actualizado correctamente');
-        },
-        (error) => console.error('Error al actualizar el cliente:', error)
-      );
     } else {
-      this.clientesService.agregarCliente(this.cliente).subscribe(
+      // Si no está editando, agregar un nuevo cliente
+      this.clientesService.agregarCliente(clienteAEnviar).subscribe(
         () => {
           this.obtenerClientes();
           this.cerrarFormulario();
@@ -79,6 +91,9 @@ export class AdminClientesComponent implements OnInit {
       );
     }
   }
+  
+  
+
 
   editarCliente(id: number): void {
     if (!id) {
@@ -112,11 +127,10 @@ export class AdminClientesComponent implements OnInit {
     return this.clientes.filter(
       (cliente) =>
         (!this.filtroNombre ||
-          cliente.nombre
-            .toLowerCase()
+          cliente.nombre?.toLowerCase()
             .includes(this.filtroNombre.toLowerCase())) &&
         (!this.filtroCorreo ||
-          cliente.correo.toLowerCase().includes(this.filtroCorreo.toLowerCase()))
+          cliente.correo?.toLowerCase().includes(this.filtroCorreo.toLowerCase()))
     );
   }
 
@@ -127,7 +141,6 @@ export class AdminClientesComponent implements OnInit {
       correo: '',
       telefono: '',
       preferencias: '',
-      fecha_registro: new Date()
     };
   }
 }

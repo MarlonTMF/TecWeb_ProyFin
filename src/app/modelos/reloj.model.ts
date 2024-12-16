@@ -11,5 +11,4 @@ export interface ProductModel {
     material_pulsera?:string;
     categoria?:string;
     id?: number;
-    
 }

@@ -8,7 +8,7 @@ import { ClienteModel } from '../modelos/cliente.model';
   providedIn: 'root',
 })
 export class AdminCrudClientesService {
-  private apiURL = 'https://674ca03a54e1fca9290d1f71.mockapi.io/Cliente'; // Cambiar al endpoint para clientes
+  private apiURL = "http://localhost:3000/api/v1/cliente";
 
   constructor(private http: HttpClient) {}
 
@@ -34,7 +34,7 @@ export class AdminCrudClientesService {
     id: number,
     cliente: Partial<ClienteModel>
   ): Observable<ClienteModel> {
-    return this.http.put<ClienteModel>(`${this.apiURL}/${id}`, cliente).pipe(
+    return this.http.patch<ClienteModel>(`${this.apiURL}/${id}`, cliente).pipe(
       catchError(this.handleError)
     );
   }
@@ -45,8 +45,30 @@ export class AdminCrudClientesService {
     );
   }
 
+
   private handleError(error: HttpErrorResponse) {
-    console.error('Ocurrió un error:', error);
-    return throwError('Algo salió mal; por favor intente de nuevo más tarde.');
+    let errorMessage = 'Algo salió mal; por favor intente de nuevo más tarde.';
+    
+    if (error.error instanceof ErrorEvent) {
+      // Error de cliente
+      console.error('Error en la solicitud:', error.error.message);
+      errorMessage = `Error en la solicitud: ${error.error.message}`;
+    } else {
+      // Error del servidor
+      console.error(`Código de estado: ${error.status}`);
+      console.error(`Cuerpo del error: ${JSON.stringify(error.error)}`);
+      
+      if (error.status === 400) {
+        errorMessage = `Error en la solicitud (400): ${error.error.message || 'Solicitud incorrecta'}`;
+      } else if (error.status === 404) {
+        errorMessage = 'Recurso no encontrado (404)';
+      } else if (error.status === 500) {
+        errorMessage = 'Error en el servidor (500)';
+      }
+    }
+  
+    // Puedes realizar una acción adicional, como mostrar un mensaje en la UI o enviar el error a un servicio de monitoreo.
+    return throwError(errorMessage);
   }
+
 }

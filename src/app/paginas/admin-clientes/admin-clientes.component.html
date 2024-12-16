@@ -59,10 +59,12 @@
           <td>{{ cliente.nombre }}</td>
           <td>{{ cliente.correo }}</td>
           <td>{{ cliente.telefono }}</td>
-          <td>
-            <button class="editar" (click)="editarCliente(cliente.id)">Editar</button>
-            <button class="eliminar" (click)="eliminarCliente(cliente.id)">Eliminar</button>
-          </td>
+<!-- Acciones para editar o eliminar -->
+<td>
+  <button class="editar" (click)="editarCliente(cliente.id ? cliente.id : 0)">Editar</button>
+  <button class="eliminar" (click)="eliminarCliente(cliente.id ? cliente.id : 0)">Eliminar</button>
+</td>
+
         </tr>
       </tbody>
     </table>
