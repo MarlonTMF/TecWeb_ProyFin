@@ -37,6 +37,18 @@
         />
       </div>
 
+      <div class="form-group">
+        <label for="telefono">Preferencias:</label>
+        <input
+          id="telefono"
+          type="tel"
+          [(ngModel)]="user.telefono"
+          name="telefono"
+          required
+          placeholder="Ingrese su número de teléfono"
+        />
+      </div>
+
       <button class="btn" type="submit">Registrar</button>
     </form>
   

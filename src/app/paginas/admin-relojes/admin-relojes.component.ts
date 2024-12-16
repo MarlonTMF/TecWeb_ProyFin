@@ -58,6 +58,7 @@ export class AdminRelojesComponent implements OnInit {
   }
 
   guardarProducto(): void {
+    // Validaciones de campos
     if (
       !this.producto.nombre ||
       !this.producto.caja ||
@@ -67,7 +68,26 @@ export class AdminRelojesComponent implements OnInit {
       console.error('Todos los campos son obligatorios');
       return;
     }
-
+  
+    // Validación extra para asegurarse de que el producto tenga el formato esperado
+    if (typeof this.producto.nombre !== 'string' || this.producto.nombre.trim() === '') {
+      console.error('El nombre del producto es inválido');
+      return;
+    }
+  
+    if (this.producto.precio <= 0) {
+      console.error('El precio debe ser mayor que cero');
+      return;
+    }
+  
+    if (this.producto.stock < 0) {
+      console.error('El stock no puede ser negativo');
+      return;
+    }
+  
+    console.log('Datos a enviar al backend:', this.producto); // Imprimir los datos que se enviarán
+  
+    // Enviar solicitud al servidor
     if (this.editando) {
       // Actualizar producto
       if (!this.producto.id) {
@@ -80,22 +100,27 @@ export class AdminRelojesComponent implements OnInit {
           this.cerrarFormulario();
           console.log('Producto actualizado correctamente');
         },
-        (error) => console.error('Error al actualizar el producto:', error)
+        (error) => {
+          console.error('Error al actualizar el producto:', error);
+        }
       );
     } else {
       // Agregar nuevo producto
       this.relojesService.agregarReloj(this.producto).subscribe(
-        () => {
+        (nuevoProducto) => {
           this.obtenerProductos();
           this.cerrarFormulario();
-          console.log('Producto agregado correctamente');
+          console.log('Producto agregado correctamente', nuevoProducto);
         },
-        (error) => console.error('Error al agregar el producto:', error)
+        (error) => {
+          console.error('Error al agregar el producto:', error);
+        }
       );
     }
   }
-
-  editarProducto(id: string): void {
+  
+  
+  editarProducto(id: number | undefined): void {
     if (!id) {
       console.error('El ID del producto no es válido',id);
       return;
@@ -110,7 +135,12 @@ export class AdminRelojesComponent implements OnInit {
     );
   }
 
-  eliminarProducto(id: string): void {
+  eliminarProducto(id: number | undefined): void {
+    if (id === undefined) {
+      console.error('El ID del producto no es válido');
+      return;
+    }
+  
     if (confirm('¿Estás seguro de eliminar este producto?')) {
       this.relojesService.eliminarReloj(id).subscribe(
         () => {
@@ -122,22 +152,22 @@ export class AdminRelojesComponent implements OnInit {
     }
   }
   
+  
 
   get productosFiltrados(): ProductModel[] {
     return this.productos.filter(
       (producto) =>
         (!this.filtroNombre ||
-          producto.nombre
-            .toLowerCase()
+          producto.nombre?.toLowerCase()
             .includes(this.filtroNombre.toLowerCase())) &&
         (!this.filtroCaja ||
-          producto.caja.toLowerCase().includes(this.filtroCaja.toLowerCase()))
+          producto.caja?.toLowerCase().includes(this.filtroCaja.toLowerCase()))
     );
   }
 
   private nuevoProducto(): ProductModel {
     return {
-      id: '',
+      id: undefined,
       nombre: '',
       caja: '',
       precio: 0,

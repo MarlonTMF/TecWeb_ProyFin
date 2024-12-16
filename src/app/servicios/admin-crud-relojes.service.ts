@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient,HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable,of,throwError } from 'rxjs';
 import { catchError,map } from 'rxjs/operators';
 import { ProductModel } from '../modelos/reloj.model';
@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class AdminCRUDRelojesService {
 
-  private apiURL = "https://674ca03a54e1fca9290d1f71.mockapi.io/reloj";
+  private apiURL = "http://localhost:3000/api/v1/producto";
 
   constructor(private http:HttpClient) {}
 
@@ -26,24 +26,34 @@ export class AdminCRUDRelojesService {
       );
     }
 
-    obtenerRelojPorId(id: string): Observable<ProductModel> {
+    obtenerRelojPorId(id: number): Observable<ProductModel> {
       return this.http.get<ProductModel>(`${this.apiURL}/${id}`).pipe(
         catchError(this.handleError)
       );
     }
 
-    actualizarReloj(id: string, reloj: Partial<ProductModel>): Observable<ProductModel> {
-      return this.http.put<ProductModel>(`${this.apiURL}/${id}`, reloj).pipe(
+    agregarReloj(producto: ProductModel): Observable<ProductModel> {
+      return this.http.post<ProductModel>(`${this.apiURL}`, producto).pipe(
+        catchError((error) => {
+          console.error('Error al agregar el producto:', error);
+          return this.handleError(error); // Mejora en la depuración.
+        })
+      );
+    }
+    
+    actualizarReloj(id: number, producto: ProductModel): Observable<any> {
+      // Eliminar los campos id y deletedAt antes de enviar
+      const productoSinIdYDeletedAt = { ...producto };
+      delete productoSinIdYDeletedAt.id;  // Asegúrate de que el id no esté incluido
+    
+      const url = `http://localhost:3000/api/v1/producto/${id}`;
+      return this.http.patch(url, productoSinIdYDeletedAt).pipe(
         catchError(this.handleError)
       );
     }
-
-    agregarReloj(reloj: ProductModel): Observable<ProductModel> {
-      return this.http.post<ProductModel>(this.apiURL, reloj).pipe(
-        catchError(this.handleError)
-      );
-    }
-
+    
+    
+    
     obtenerRelojesPorCategoria(categoria: string): Observable<ProductModel[]> {
       return this.http.get<ProductModel[]>(`${this.apiURL}?categoria=${categoria}`).pipe(
         catchError(this.handleError)
@@ -58,7 +68,7 @@ export class AdminCRUDRelojesService {
       );
     }
   
-    eliminarReloj(id: string): Observable<void> {
+    eliminarReloj(id: number): Observable<void> {
       return this.http.delete<void>(`${this.apiURL}/${id}`).pipe(
         catchError(this.handleError)
       );
@@ -66,8 +76,28 @@ export class AdminCRUDRelojesService {
     
 
     private handleError(error: HttpErrorResponse) {
-      console.error('Ocurrió un error:', error);
-      return throwError('Algo salió mal; por favor intente de nuevo más tarde.');
+      let errorMessage = 'Algo salió mal; por favor intente de nuevo más tarde.';
+      
+      if (error.error instanceof ErrorEvent) {
+        // Error de cliente
+        console.error('Error en la solicitud:', error.error.message);
+        errorMessage = `Error en la solicitud: ${error.error.message}`;
+      } else {
+        // Error del servidor
+        console.error(`Código de estado: ${error.status}`);
+        console.error(`Cuerpo del error: ${JSON.stringify(error.error)}`);
+        
+        if (error.status === 400) {
+          errorMessage = `Error en la solicitud (400): ${error.error.message || 'Solicitud incorrecta'}`;
+        } else if (error.status === 404) {
+          errorMessage = 'Recurso no encontrado (404)';
+        } else if (error.status === 500) {
+          errorMessage = 'Error en el servidor (500)';
+        }
+      }
+    
+      // Puedes realizar una acción adicional, como mostrar un mensaje en la UI o enviar el error a un servicio de monitoreo.
+      return throwError(errorMessage);
     }
-
+    
 }
