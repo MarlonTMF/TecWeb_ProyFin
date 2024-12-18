@@ -11,4 +11,6 @@ export interface ProductModel {
     material_pulsera?:string;
     categoria?:string;
     id?: number;
+    mostrarDescripcion?: boolean; // Nueva propiedad para controlar la descripción
+
 }

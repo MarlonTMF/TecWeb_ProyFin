@@ -35,6 +35,11 @@ export class VerProductosComponent {
     );
   }
 
+  toggleDescripcion(producto: ProductModel): void {
+    // Cambiar el estado de mostrarDescripcion
+    producto.mostrarDescripcion = !producto.mostrarDescripcion;
+  }
+
   buscarProductos(): void {
     this.productosFiltrados = this.productos.filter((producto) => {
       const coincideNombre = this.nombre
