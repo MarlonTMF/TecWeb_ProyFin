@@ -5,6 +5,12 @@
       <label>Buscar por Caja:</label>
       <input [(ngModel)]="filtroCaja" name="filtroCaja" placeholder="Caja" />
     </div>
+
+    <div>
+
+      <img src="" alt="">
+
+    </div>
   
     <div class="container">
       <!-- Botón para agregar un producto -->
@@ -56,7 +62,9 @@
             <th>Caja</th>
             <th>Precio</th>
             <th>Stock</th>
+            <th>Imagen</th>
             <th>Acciones</th>
+
           </tr>
         </thead>
         <tbody>
@@ -66,8 +74,15 @@
             <td>{{ producto.precio | currency }}</td>
             <td>{{ producto.stock }}</td>
             <td>
-              <button (click)="editarProducto(producto.id_producto)">Editar</button>
-              <button (click)="eliminarProducto(producto.id_producto)">Eliminar</button>
+              <!-- Mostrar la imagen -->
+              <img [src]="producto.imagen_url" alt="Imagen del producto" width="100" height="100" *ngIf="producto.imagen_url" />
+              <span *ngIf="!producto.imagen_url">Sin imagen</span>
+            </td>
+            <td>
+              <!-- <button (click)="editarProducto(producto.id)">Editar {{producto|json}}</button> -->
+              <button (click)="editarProducto(producto.id)">Editar</button>
+
+              <button (click)="eliminarProducto(producto.id)">Eliminar</button>
             </td>
           </tr>
         </tbody>
