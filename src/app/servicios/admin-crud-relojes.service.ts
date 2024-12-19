@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class AdminCRUDRelojesService {
 
-  private apiURL = "http://localhost:3000/api/v1/producto";
+  private apiURL = "https://proy-fin-angular-backend.onrender.com/api/v1/producto";
 
   constructor(private http:HttpClient) {}
 

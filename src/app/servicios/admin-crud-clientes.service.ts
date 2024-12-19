@@ -8,7 +8,7 @@ import { ClienteModel } from '../modelos/cliente.model';
   providedIn: 'root',
 })
 export class AdminCrudClientesService {
-  private apiURL = "http://localhost:3000/api/v1/cliente";
+  private apiURL = "https://proy-fin-angular-backend.onrender.com/api/v1/cliente";
 
   constructor(private http: HttpClient) {}
 
