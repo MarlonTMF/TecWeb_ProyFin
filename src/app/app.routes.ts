@@ -5,7 +5,9 @@ import { AdminClientesComponent } from './paginas/admin-clientes/admin-clientes.
 import { VerProductosComponent } from './paginas/ver-productos/ver-productos.component';
 import { CategoriaSeamasterComponent } from './paginas/categoria-seamaster/categoria-seamaster.component';
 import { CategoriaSpeedmasterComponent } from './paginas/categoria-speedmaster/categoria-speedmaster.component';
+import { FormularioComponent } from './paginas/formulario/formulario.component';import { VerProductosComponent } from './paginas/ver-productos/ver-productos.component'; 
 import { FormularioComponent } from './paginas/formulario/formulario.component';
+import { LoginComponent } from './paginas/login/login.component';
 
 export const routes: Routes = [
     {path:'', component:HomeComponent},
