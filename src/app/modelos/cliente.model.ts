@@ -1,5 +1,5 @@
 export interface ClienteModel {
-    id_cliente: number;
+    id: number;
     nombre: string;
     correo: string;
     telefono:string;

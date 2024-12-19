@@ -27,6 +27,10 @@
     </form>
   </div>
 
+  <div *ngIf="loginError" class="error-message">
+    <p>Credenciales incorrectas, por favor intente nuevamente.</p>
+  </div>
+
   <!-- Opción de entrar sin registrarse -->
   <div class="guest-box">
     <h2>¿No tienes cuenta?</h2>

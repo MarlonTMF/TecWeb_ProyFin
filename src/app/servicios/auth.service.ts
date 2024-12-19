@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
+
+export class AuthService {
+    login(username: string, password: string): Observable<any> {
+      // Simulando una respuesta exitosa si el usuario es 'admin' y la contraseña es 'admin'
+      if (username === 'admin' && password === 'admin') {
+        return of({ token: 'mock-jwt-token' });  // Simulamos un token JWT
+      } else {
+        return of(null);  // Si el usuario o la contraseña son incorrectos, devolvemos null
+      }
+    }
+  }
+/*
 export class AuthService {
   private apiUrl = 'http://tuservidor/api/login'; // Reemplaza con la URL de tu API
 
@@ -36,3 +48,4 @@ export class AuthService {
     return this.getToken() !== null;
   }
 }
+  */
